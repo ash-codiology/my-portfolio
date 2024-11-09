@@ -1,113 +1,191 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { motion } from 'framer-motion';
+import Head from "next/head";
+import Image from 'next/image';
+
+const Portfolio = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    document.documentElement.classList.toggle("dark");
+    setIsDarkMode(!isDarkMode);
+  };
+
+  // Animation Variants
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50, rotateX: -10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      transition: { duration: 0.8 },
+    },
+  };
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <>
+      <Head>
+        <title>Ashfa Shakeel | Portfolio</title>
+        <meta name="description" content="Ashfa Shakeel's professional portfolio" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+      {/* Header */}
+      <header className="p-6 bg-teal-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 flex justify-between items-center sticky top-0 z-50 shadow-lg">
+        <h1 className="text-3xl font-bold">Ashfa&apos;s Portfolio</h1>
+        <nav className="space-x-8">
+          <button onClick={() => scrollToSection("home")}>Home</button>
+          <button onClick={() => scrollToSection("about")}>About</button>
+          <button onClick={() => scrollToSection("skills")}>Skills</button>
+          <button onClick={() => scrollToSection("experience")}>Experience</button>
+          <button onClick={() => scrollToSection("education")}>Education</button>
+          <button onClick={() => scrollToSection("contact")}>Contact</button>
+        </nav>
+        <button
+          className="ml-4 p-2 rounded-full bg-yellow-400 dark:bg-gray-700 text-black dark:text-white"
+          onClick={toggleDarkMode}
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+          {isDarkMode ? "Light Mode" : "Dark Mode"}
+        </button>
+      </header>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+      {/* Main Content */}
+      <main className="bg-teal-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen transition-colors">
+        {/* Home Section */}
+        <motion.section
+          id="home"
+          className="min-h-screen flex flex-col items-center justify-center bg-teal-100 dark:bg-gray-800 text-center"
+          initial="hidden"          
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={sectionVariants}
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
+          <Image 
+            src="/profile-pic (1).png" 
+            alt="Ashfa Shakeel" 
+            className=" rounded-full shadow-lg mb-6" 
+            width={400} 
+            height={400} 
+          />
+          <h1 className="text-5xl font-bold text-gray-700 dark:text-yellow-300">
+            Welcome to My Portfolio
+          </h1>
+          <p className="text-xl mt-4 max-w-3xl">
+            {`I'm Ashfa Shakeel, a passionate pharmacist and aspiring web developer. Here, you'll discover a blend of my expertise in healthcare and my growing skills in web development. I'm excited to share my journey, experiences that combine technology and pharmacy, creating impactful solutions for better healthcare.`}
           </p>
-        </a>
+          <p className="text-xl mt-4 max-w-3xl">
+           {`Explore my portfolio to see how I bring these two worlds together. Let's connect and collaborate on new projects to help shape the future of healthcare technology!`}
+          </p>
+        </motion.section>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* About Section */}
+        <motion.section
+          id="about"
+          className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-700 text-center p-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={sectionVariants}
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
+          <h1 className="text-4xl font-bold">About Me</h1>
+          <p className="text-xl mt-4 max-w-3xl">
+            {`I am a passionate pharmacist with a deep interest in technology, and my goal is to create impactful solutions that bridge the gap between healthcare and digital innovation. With a background in pharmacy and a growing expertise in web development, I strive to make healthcare more accessible and efficient through the power of technology.`}
           </p>
-        </a>
+          <p className="text-xl mt-4 max-w-3xl">
+           {` My experience in pharmacy allows me to understand the challenges healthcare professionals face, which I combine with my web development skills to create user-friendly digital tools. I am continuously learning new technologies and expanding my skills to stay at the forefront of the tech world.`}
+          </p>
+        </motion.section>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* Skills Section */}
+        <motion.section
+          id="skills"
+          className="min-h-screen flex flex-col items-center justify-center bg-yellow-50 dark:bg-gray-600 text-center p-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={sectionVariants}
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          <h1 className="text-4xl font-bold">Skills & Expertise</h1>
+          <ul className="list-disc list-inside mt-6 text-lg">
+            <li>{`Pharmacy Expertise - In-depth understanding of pharmaceutical practices, drug management, and patient care.`}</li>
+            <li>{`Web Development - Proficient in creating full-stack web applications with Next.js, React, Node.js, and Express`}</li>
+            <li>{`Front-End Technologies - Advanced knowledge of HTML, CSS, JavaScript, and Tailwind CSS for creating responsive, user-friendly interfaces.`}</li>
+            <li>{`Responsive Design - Expertise in designing mobile-first, responsive websites to ensure seamless user experiences across devices.`}</li>
+            <li>{`UI/UX Design - Skilled in creating intuitive and aesthetically pleasing designs that prioritize user experience.`}</li>
+            <li>{`Version Control - Proficient in using Git and GitHub for collaborative coding and version management.`}</li>
+          </ul>
+        </motion.section>
+
+        {/* Experience Section */}
+        <motion.section
+          id="experience"
+          className="min-h-screen flex flex-col items-center justify-center bg-teal-50 dark:bg-gray-700 text-center p-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={sectionVariants}
+        >
+          <h1 className="text-4xl font-bold">Experience</h1>
+          <ul className="list-disc list-inside mt-6 text-lg">
+            <li><strong>{`Working as a Pharmacist`}</strong>{`(2024 - Present)`}<p>{`I provide exceptional patient care through the safe and effective use of medications, bridging healthcare and technology to improve patient outcomes.`}</p></li>
+            <li><strong>{`Web Developer at Governor Sindh Initiative For GenAL, Web3, Metaverse`}</strong>{` (2023 - Present)`} <p>{`I am expanding my web development skills with technologies like React and Next.js, focusing on healthcare-driven solutions.`}</p></li>
+            <li><strong>{`House Job`}</strong>{` (2023-2024) `}<p>{`I worked as a hospital pharmacist, gaining hands-on experience in medication management and patient care.`}</p></li>
+          </ul>
+        </motion.section>
+
+        {/* Education Section */}
+        <motion.section
+          id="education"
+          className="min-h-screen flex flex-col items-center justify-center bg-teal-50 dark:bg-gray-700 text-center p-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={sectionVariants}
+        >
+          <h1 className="text-4xl font-bold">Education</h1>
+          <ul className="list-disc list-inside mt-6 text-lg">
+            <li><strong>{`Web Development (Present)`}</strong> {`- GIAIC, 2024`}</li>
+            <li><strong>{`House Job`}</strong> {`- 2022-23`}</li>
+            <li><strong>{`Bachelor of Pharmacy`}</strong> {`- University of PUMHSW, 2017`}</li>
+            <li><strong>{`Intermediate`}</strong> {`- County Girls College, 2016`}</li>
+            <li><strong>{`Matriculation`}</strong> {`- Eaton Public School, 2014`}</li>
+          </ul>
+        </motion.section>
+      </main>
+
+      {/* Contact Section */}
+      <motion.section
+        id="contact"
+        className="min-h-screen flex flex-col items-center justify-center bg-yellow-50 dark:bg-gray-800 text-center p-10"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={sectionVariants}
+      >
+        <h1 className="text-4xl font-bold">Contact Me</h1>
+        <p className="text-xl mt-4 max-w-3xl">{`Feel free to reach out to me for collaboration or job opportunities.`}</p>
+        <form className="max-w-lg w-full space-y-4 mt-6">
+          <input type="text" placeholder="Your Name" className="w-full p-4 rounded-lg shadow-sm focus:ring-2 focus:ring-yellow-500 dark:focus:ring-gray-500" />
+          <input type="email" placeholder="Your Email" className="w-full p-4 rounded-lg shadow-sm focus:ring-2 focus:ring-yellow-500 dark:focus:ring-gray-500" />
+          <textarea placeholder="Your Message" className="w-full p-4 rounded-lg shadow-sm focus:ring-2 focus:ring-yellow-500 dark:focus:ring-gray-500" />
+          <button type="submit" className="w-full p-4 bg-yellow-400 dark:bg-gray-600 text-white rounded-lg transform transition hover:scale-105">
+            Send Message
+          </button>
+        </form>
+      </motion.section>
+
+      {/* Footer */}
+      <footer className="p-6 bg-teal-200 dark:bg-gray-900 text-gray-800 dark:text-gray-100 text-center">
+        <p>&copy; 2024 Ashfa Shakeel | All Rights Reserved</p>
+      </footer>
+    </>
   );
-}
+};
+
+export default Portfolio;
